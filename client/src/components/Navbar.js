@@ -32,11 +32,11 @@ const Navbar = () => {
         </button>
         <div>
           <Logo />
-          <h3 className="logo-name">Dashboard</h3>
+          <h3 className="logo-text">Dashboard</h3>
         </div>
         <div className="btn-container">
           <button
-            className="toggle-btn"
+            className="toggle-btn btn"
             onClick={() => {
               setShowLogout(!showLogout);
             }}
