@@ -8,6 +8,7 @@ import morgan from "morgan";
 // router
 import authRouter from "./routes/authRouter.js";
 import jobsRouter from "./routes/jobsRouter.js";
+import authenticateUser from "./middleware/auth.js";
 
 dotenv.config();
 
@@ -31,9 +32,9 @@ app.get("/api/v1", (req, res) => {
   res.json({ masg: "home page" });
 });
 
-// routers here:
+// routers here: 
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/jobs", jobsRouter);
+app.use("/api/v1/jobs", authenticateUser, jobsRouter);
 
 // app.use for middleware
 app.use(notFoundMiddleware);
