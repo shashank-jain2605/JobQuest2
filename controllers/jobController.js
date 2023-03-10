@@ -1,5 +1,19 @@
+import Job from "../models/Job.js";
+
 const createJob = async (req, res) => {
-  res.send("create job");
+  const { position, company } = req.body;
+
+  if (!position || !company) {
+    throw new Error("Enter all required details");
+  }
+
+  req.body.createdBy = req.user.userId;
+
+  // create job
+  const job = await Job.create(req.body);
+
+  // response
+  res.status(200).json({ job });
 };
 const deleteJob = async (req, res) => {
   console.log(req.params);
