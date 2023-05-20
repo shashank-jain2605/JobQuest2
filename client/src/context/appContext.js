@@ -17,6 +17,8 @@ import {
   CREATE_JOB_BEGIN,
   CREATE_JOB_ERROR,
   CREATE_JOB_SUCCESS,
+  GET_JOBS_BEGIN,
+  GET_JOBS_SUCCESS,
 } from "./action";
 
 const user = localStorage.getItem("user");
@@ -43,6 +45,11 @@ const initialState = {
   jobType: "full-time",
   statusOptions: ["interview", "declined", "pending"],
   status: "pending",
+
+  jobs: [],
+  totalJobs: 0,
+  numOfPages: 1,
+  page: 1,
 };
 
 // creating the context
@@ -207,6 +214,38 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const getJobs = async () => {
+    let url = "/jobs";
+
+    dispatch({ type: GET_JOBS_BEGIN });
+    console.log("jobs api");
+
+    try {
+      const { data } = await authFetch(url);
+      const { jobs, totalJobs, numOfPages } = data;
+      console.log("jobs", jobs);
+      dispatch({
+        type: GET_JOBS_SUCCESS,
+        payload: {
+          jobs,
+          totalJobs,
+          numOfPages,
+        },
+      });
+    } catch (err) {
+      console.log(err.response);
+    }
+
+    clearAlert();
+  };
+
+  const setEditJob = (id) => {
+    console.log(`set edit job ${id}`);
+  };
+  const setDeleteJob = (id) => {
+    console.log(`set delete job ${id}`);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -219,6 +258,9 @@ const AppProvider = ({ children }) => {
         changeInputValues,
         clearValues,
         createjob,
+        getJobs,
+        setEditJob,
+        setDeleteJob,
       }}
     >
       {children}
