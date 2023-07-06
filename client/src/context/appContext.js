@@ -19,6 +19,7 @@ import {
   CREATE_JOB_SUCCESS,
   GET_JOBS_BEGIN,
   GET_JOBS_SUCCESS,
+  SET_EDIT_JOB,
 } from "./action";
 
 const user = localStorage.getItem("user");
@@ -241,7 +242,13 @@ const AppProvider = ({ children }) => {
 
   const setEditJob = (id) => {
     console.log(`set edit job ${id}`);
+    dispatch({ type: SET_EDIT_JOB, payload: { id } });
   };
+
+  const editJob = () => {
+    console.log("edit job");
+  };
+
   const setDeleteJob = (id) => {
     console.log(`set delete job ${id}`);
   };
@@ -261,6 +268,7 @@ const AppProvider = ({ children }) => {
         getJobs,
         setEditJob,
         setDeleteJob,
+        editJob,
       }}
     >
       {children}
